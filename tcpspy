@@ -10,7 +10,7 @@ if [ -z "$HOST" -o -z "$PORT" -o "$1" = "-h" ];then
     exit 1
 fi
 
-tmpdir=$(mktemp -d foo)
+tmpdir=$(mktemp -d tcpspy.out)
 logfile=${tmpdir}/http.log
 
 touch $logfile
