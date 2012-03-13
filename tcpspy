@@ -1,0 +1,25 @@
+#!/bin/sh
+# nice explanation here http://blog.hawkhost.com/2009/12/12/using-netcat-as-an-intercepting-proxy/
+
+HOST=$1
+PORT=$2
+PROXY_PORT=${3:-6060}
+
+if [ -z "$HOST" -o -z "$PORT" -o "$1" = "-h" ];then
+    echo "usage: $(basename $0) your_server_host your_server_port [tcpspy_port]"
+    exit 1
+fi
+
+tmpdir=$(mktemp -d foo)
+logfile=${tmpdir}/http.log
+
+touch $logfile
+tail -f $logfile &
+tail_pid=$!
+
+trap "rm -rf $tmpdir; kill $tail_pid 2>/dev/null" EXIT INT TERM HUP
+
+echo "send some traffic to spy on to localhost:$PROXY_PORT"
+pipe=${tmpdir}/pipe
+mkfifo $pipe
+nc -l $PROXY_PORT 0<$pipe | tee -a $logfile | nc $HOST $PORT | tee -a $logfile 1>$pipe
