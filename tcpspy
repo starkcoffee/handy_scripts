@@ -22,4 +22,4 @@ trap "rm -rf $tmpdir; kill $tail_pid 2>/dev/null" EXIT INT TERM HUP
 echo "send some traffic to spy on to localhost:$PROXY_PORT"
 pipe=${tmpdir}/pipe
 mkfifo $pipe
-nc -l $PROXY_PORT 0<$pipe | tee -a $logfile | nc $HOST $PORT | tee -a $logfile 1>$pipe
+nc -k -l $PROXY_PORT 0<$pipe | tee -a $logfile | nc $HOST $PORT | tee -a $logfile 1>$pipe
