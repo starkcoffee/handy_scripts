@@ -11,3 +11,5 @@
 [user]
 	name = Duana Saskia
 	email = starkcoffee+github@gmail.com
+[push]
+	default = simple
