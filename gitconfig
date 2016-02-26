@@ -2,7 +2,7 @@
 	st = status
 	ca = commit -am
 	co = checkout
-  branch-name = !git branch 2>/dev/null | grep -e ^* | tr -d '* '
+  	branch-name = !git branch 2>/dev/null | grep -e ^* | tr -d '* '
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	compare = !"open https://github.com/soundcloud/`echo ${PWD##*/}`/compare/`git branch-name`"
   implode = !"BN=`git branch-name` && [ $BN != 'master' ] && git co master && git branch -D $BN && git push origin :$BN"
